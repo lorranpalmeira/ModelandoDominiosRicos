@@ -11,12 +11,17 @@ namespace PaymentContext.Domain.Entities
 
         private IList<Subscription> _subscriptions;
 
+        
         public Student(Name name, Document document, Email email)
         {
             this.name = name;
             this.Document = document;
             this.Email = email;
             _subscriptions = new List<Subscription>();
+
+
+            AddNotifications(name,document,email);
+
         }
 
         public Name name { get; set; }
