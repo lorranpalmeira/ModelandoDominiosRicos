@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Entities;
+using Flunt.Validations;
 
 namespace PaymentContext.Domain.Entities
 {
@@ -36,12 +37,23 @@ namespace PaymentContext.Domain.Entities
 
         public void AddSubscription(Subscription subscription){
 
-            foreach (var sub in Subscriptions)
+            var hasSubscriptionActive = false;
+            foreach (var sub in _subscriptions)
             {
-                sub.Inactivate(); 
+                if(sub.Active == true)
+                    hasSubscriptionActive = true;
             }
 
-            _subscriptions.Add(subscription);
+            if(hasSubscriptionActive)
+                AddNotification("Student.Subscriptions","Você já tem uma assisnatura");
+
+            // AddNotifications(
+            //     new Contract()
+            //     .Requires()
+            //     .IsFalse(hasSubscriptionActive,3,"Student.Subscriptions","Você já tem uma assinatura")
+            // );
+
+            //_subscriptions.Add(subscription);
         }
 
 
