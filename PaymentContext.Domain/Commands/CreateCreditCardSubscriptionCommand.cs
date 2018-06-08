@@ -6,7 +6,7 @@ namespace PaymentContext.Domain.Commands
 {
     public class CreateCreditCardSubscriptionCommand
     {
-                    public class CreatePayPalSubscriptionCommand{
+                    
 
         public string FirstName { get;  set; }
         public string LastName { get;  set; }
