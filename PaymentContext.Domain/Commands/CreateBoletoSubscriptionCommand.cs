@@ -7,7 +7,7 @@ using PaymentContext.Shared;
 
 namespace PaymentContext.Domain.Commands
 {
-    public class CreateBoletoSubscription : Notifiable , ICommand
+    public class CreateBoletoSubscriptionCommand : Notifiable , ICommand
     {
 
         public string FirstName { get;  set; }
