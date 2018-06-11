@@ -48,7 +48,14 @@ namespace PaymentContext.Domain.Handlers
 
             var student = new Student(name,document,email);
             var subscription =  new Subscription(DateTime.Now.AddMonths(1));
-            var payment = new BoletoPayment();
+            var payment = new BoletoPayment(command.BarCode, command.BoletoNumber,command.PaidDate,
+            command.ExpireDate,command.Total,command.TotalPaid,  
+            new Document(command.PayerDocument,command.PayerDocumentType), command.Payer,address,email);
+
+            // Relacionamentos
+
+            subscription.AddPayment(payment);
+            student.AddSubscription(subscription);
 
             //AddNotifications(new Contract());
 
