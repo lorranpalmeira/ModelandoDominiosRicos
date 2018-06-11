@@ -5,6 +5,7 @@ using PaymentContext.Domain.Commands;
 using PaymentContext.Domain.Entities;
 using PaymentContext.Domain.Enums;
 using PaymentContext.Domain.Repositories;
+using PaymentContext.Domain.Services;
 using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Handlers;
 using PaymentContext.Shared.ValueObjects;
@@ -15,10 +16,12 @@ namespace PaymentContext.Domain.Handlers
     {
 
         private readonly IStudentRepository _repository;
+        private readonly IEmailService _emailService ;
 
-        public SubscriptionHandler(IStudentRepository repository)
+        public SubscriptionHandler(IStudentRepository repository, IEmailService emailService)
         {
             _repository = repository;
+            _emailService = emailService;
         }
         public ICommandResult Handle(CreateBoletoSubscriptionCommand command)
         {
@@ -56,6 +59,11 @@ namespace PaymentContext.Domain.Handlers
 
             subscription.AddPayment(payment);
             student.AddSubscription(subscription);
+
+
+            _repository.CreateSubscription(student);
+
+            _emailService.Send(student.name.ToString(), student.Email.Address,"bem vindo","Sua assinatura foi criada");
 
             //AddNotifications(new Contract());
 
