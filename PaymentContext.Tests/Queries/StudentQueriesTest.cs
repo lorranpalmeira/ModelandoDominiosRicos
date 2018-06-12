@@ -36,6 +36,18 @@ namespace PaymentContext.Tests.Queries
 
             Assert.AreEqual(null,studn);
         }
+
+        [TestMethod]
+        public void ShouldReturnNullWhenDocumentExists(){
+
+            var exp = StudentQueries.GetStudentInfo("1111111111");
+            var studn = _students.AsQueryable().Where(exp).FirstOrDefault();
+
+            Assert.AreNotEqual(null,studn);
+        }
+
+        
+
         
     }
 }
